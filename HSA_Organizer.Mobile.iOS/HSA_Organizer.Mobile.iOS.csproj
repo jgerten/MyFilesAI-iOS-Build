@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- macOS CI only: needs the .NET 10 iOS workload and Xcode 26. Apple rejects
+         TestFlight uploads not built with the current iOS SDK. -->
+    <TargetFramework>net10.0-ios</TargetFramework>
+    <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <!-- Device builds must be arm64; the simulator RID will not install on a phone. -->
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <!-- The app itself: a pre-built IL assembly exported from the private source
+       repo (publish-ios.ps1 -App myfilesai). No source lives here. The same DLL
+       ships inside every .ipa, so nothing extra is exposed. -->
+  <ItemGroup>
+    <Reference Include="HSA_Organizer.Mobile">
+      <HintPath>..\lib\HSA_Organizer.Mobile.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Package references do not flow through <Reference>, so every NuGet
+       dependency of the shared library (for its iOS build) is re-declared here.
+       Versions mirror the private repo's HSA_Organizer.Mobile/Directory.Packages.props. -->
+  <ItemGroup>
+    <PackageReference Include="Avalonia.iOS" Version="11.3.9" />
+    <PackageReference Include="Avalonia" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.3.0.6" />
+    <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.3.0.6" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.1.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.0" />
+  </ItemGroup>
+</Project>
