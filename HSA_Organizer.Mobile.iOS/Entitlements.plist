@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<dict>
+	<!-- Lets iOS (and password managers) offer hsa.jgerten.com credentials in the
+	     app. Requires the Associated Domains capability on the App ID and the
+	     apple-app-site-association file served by hsa.jgerten.com. -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>webcredentials:hsa.jgerten.com</string>
+	</array>
+</dict>
 </plist>
